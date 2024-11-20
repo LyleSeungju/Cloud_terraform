@@ -10,7 +10,7 @@ terraform {
     organization = "lyle_terraform_test"
 
     workspaces {
-      name = "Cloud_practice_terraform"
+      name = "Cloud_terraform_test"
     }
   }
 }
