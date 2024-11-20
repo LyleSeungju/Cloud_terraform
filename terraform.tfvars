@@ -32,7 +32,7 @@ private_subnets = {
 # NAT gateway
 # 사용하지 않으면 enabled = false
 nat = {
-    enabled            = false
+    enabled            = true
     public_subnet_name = "public1"
 }
 
