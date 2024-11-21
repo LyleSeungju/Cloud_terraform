@@ -175,17 +175,17 @@ ecr_repositories = [
 # S3
 # 사용하지 않으면: s3_buckets = {} 
 s3_buckets = {
-  # "bucket1" = {
-  #   bucket_name             = "terraform-farmmate-my-example-bucket-1"
-  #   enable_website_hosting  = true
-  #   enable_cors             = true
-  #   enable_public_access    = true
-  #   block_public_acls       = true
-  #   ignore_public_acls      = true
-  #   block_public_policy     = true
-  #   restrict_public_buckets = true
-  #   environment             = "production"
-  # },
+  "lyle-terraform-outputs" = {
+    bucket_name             = "terraform-farmmate-my-example-bucket-1"
+    enable_website_hosting  = false          # Outputs 데이터를 웹에서 노출할 필요 없음
+    enable_cors             = false          # 브라우저 기반 접근 불필요
+    enable_public_access    = false          # 공개 접근 차단
+    block_public_acls       = true           # 모든 Public ACL 차단
+    ignore_public_acls      = true           # Public ACL 무시
+    block_public_policy     = true           # Public 정책 차단
+    restrict_public_buckets = true           # 모든 Public 접근 차단
+    environment             = "production"
+  },
   # "bucket2" = {
   #   bucket_name             = "terraform-farmmate-my-example-bucket-2"
   #   enable_website_hosting  = false

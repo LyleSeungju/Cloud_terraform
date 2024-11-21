@@ -32,41 +32,30 @@ output "dynamodb_tables_info" {
 }
 
 
-# variable "slack_webhook_url" {
-#   description = "Slack Webhook URL for sending notifications"
-#   type        = string
-# }
 
 
-# resource "null_resource" "notify_slack" {
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       curl -X POST -H 'Content-type: application/json' \
-#       --data '{
-#         "text": "Terraform Outputs: \n
-#         [Instances]\n 
-#         ${jsonencode(output.instances_info)} \n\n
+output "terraform_outputs" {
+  description = "도메인별 작업에 필요한 데이터"
+  value       = jsonencode({
+    instances_info       = output.instances_info
+    rds_endpoint         = output.rds_endpoint
+    ecr_repository_urls  = output.ecr_repository_urls
+    dynamodb_tables_info = output.dynamodb_tables_info
+  })
+}
 
-
-#         [RDS Endpoint]\n 
-#         ${output.rds_endpoint}\n\n
-        
-        
-#         [ECR Repository URLs] 
-#         ${jsonencode(output.ecr_repository_urls)} \n\n
-
-
-#         [DynamoDB Tables Info] 
-#         ${jsonencode(output.dynamodb_tables_info)}"
-#       }' \
-#       ${var.slack_webhook_url}
-#     EOT
-#   }
-
-#   depends_on = [
-#     module.ec2_instance, 
-#     module.rds, 
-#     module.ecr, 
-#     module.dynamodb_tables
-#   ]
-# }
+resource "aws_s3_object" "outputs" {
+  bucket = module.s3_buckets["terraform_outputs"].bucket_id
+  key    = "terraform/outputs.json"
+  content = jsonencode({
+    instances_info       = output.instances_info
+    rds_endpoint         = output.rds_endpoint
+    ecr_repository_urls  = output.ecr_repository_urls
+    dynamodb_tables_info = output.dynamodb_tables_info
+  })
+  acl    = "private"  # 데이터 보호를 위해 파일 접근 권한 설정
+  tags = {
+    Environment = "Production"
+    ManagedBy   = "Terraform"
+  }
+}
