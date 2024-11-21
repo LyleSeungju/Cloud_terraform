@@ -39,64 +39,64 @@ nat = {
 # Security Groups
 # 사용하지 않으면: sg = []
 sg = [
-  # { 
-  #   name    = "web-unique"
-  #   ingress = [
-  #     {
-  #       from_port   = 80
-  #       to_port     = 80
-  #       protocol    = "tcp"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #     },
-  #     {
-  #       from_port   = 443
-  #       to_port     = 443
-  #       protocol    = "tcp"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #     }
-  #   ]
-  #   egress = [
-  #     {
-  #       from_port   = 0
-  #       to_port     = 0
-  #       protocol    = "-1"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #     }
-  #   ]
-  # },
-  # { 
-  #   name    = "db-unique"
-  #   ingress = [
-  #     {
-  #       from_port   = 3306
-  #       to_port     = 3306
-  #       protocol    = "tcp"
-  #       cidr_blocks = ["10.0.0.0/16"]
-  #     }
-  #   ]
-  #   egress = [
-  #     {
-  #       from_port   = 0
-  #       to_port     = 0
-  #       protocol    = "-1"
-  #       cidr_blocks = ["0.0.0.0/0"]
-  #     }
-  #   ]
-  # }
+  { 
+    name    = "web-unique"
+    ingress = [
+      {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+      },
+      {
+        from_port   = 443
+        to_port     = 443
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+    ]
+    egress = [
+      {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+    ]
+  },
+  { 
+    name    = "db-unique"
+    ingress = [
+      {
+        from_port   = 3306
+        to_port     = 3306
+        protocol    = "tcp"
+        cidr_blocks = ["10.0.0.0/16"]
+      }
+    ]
+    egress = [
+      {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+      }
+    ]
+  }
 ]
 
 # EC2
 # 사용하지 않으면: intances = []
 instances = [
-  # {
-  #   name                 = "web-service"
-  #   ami                  = "ami-062cf18d655c0b1e8"
-  #   instance_type        = "t3.micro"
-  #   volume               = 10
-  #   is_public            = true # 퍼블릭 인스턴스일때 true / 프라이빗 인스턴스일때 false
-  #   subnet_name          = "public1"
-  #   security_group_names = ["web-unique", "db-unique"]
-  # },
+  {
+    name                 = "web-service"
+    ami                  = "ami-062cf18d655c0b1e8"
+    instance_type        = "t3.micro"
+    volume               = 10
+    is_public            = true # 퍼블릭 인스턴스일때 true / 프라이빗 인스턴스일때 false
+    subnet_name          = "public1"
+    security_group_names = ["web-unique", "db-unique"]
+  },
   # {
   #   name                 = "db-service"
   #   ami                  = "ami-062cf18d655c0b1e8"
@@ -152,15 +152,15 @@ rds_config = {
 # ECR 
 # 사용하지 않으면: ecr_repositories = []
 ecr_repositories = [
-  # {
-  #   name                   = "repo1"
-  #   image_tag_mutability   = "MUTABLE"
-  #   image_scanning_enabled = false
-  #   lifecycle_policy       = false 
-  #   tags = {
-  #     type = "CI/CD"
-  #   }
-  # },
+  {
+    name                   = "repo1"
+    image_tag_mutability   = "MUTABLE"
+    image_scanning_enabled = false
+    lifecycle_policy       = false 
+    tags = {
+      type = "CI/CD"
+    }
+  },
   # {
   #   name                   = "repo2"
   #   image_tag_mutability   = "MUTABLE"
@@ -175,17 +175,17 @@ ecr_repositories = [
 # S3
 # 사용하지 않으면: s3_buckets = {} 
 s3_buckets = {
-  "bucket1" = {
-    bucket_name             = "terraform-farmmate-my-example-bucket-1"
-    enable_website_hosting  = true
-    enable_cors             = true
-    enable_public_access    = true
-    block_public_acls       = true
-    ignore_public_acls      = true
-    block_public_policy     = true
-    restrict_public_buckets = true
-    environment             = "production"
-  },
+  # "bucket1" = {
+  #   bucket_name             = "terraform-farmmate-my-example-bucket-1"
+  #   enable_website_hosting  = true
+  #   enable_cors             = true
+  #   enable_public_access    = true
+  #   block_public_acls       = true
+  #   ignore_public_acls      = true
+  #   block_public_policy     = true
+  #   restrict_public_buckets = true
+  #   environment             = "production"
+  # },
   # "bucket2" = {
   #   bucket_name             = "terraform-farmmate-my-example-bucket-2"
   #   enable_website_hosting  = false
