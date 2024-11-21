@@ -161,15 +161,15 @@ ecr_repositories = [
       type = "CI/CD"
     }
   },
-  # {
-  #   name                   = "repo2"
-  #   image_tag_mutability   = "MUTABLE"
-  #   image_scanning_enabled = false
-  #   lifecycle_policy       = true
-  #   tags = {
-  #     type = "CI/CD"
-  #   }
-  # }
+  {
+    name                   = "repo2"
+    image_tag_mutability   = "MUTABLE"
+    image_scanning_enabled = false
+    lifecycle_policy       = true
+    tags = {
+      type = "CI/CD"
+    }
+  }
 ]
 
 # S3
