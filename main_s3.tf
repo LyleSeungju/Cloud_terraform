@@ -32,7 +32,7 @@ module "s3_buckets" {
 # Outputs
 output "bucket_id" {
   description = "생성된 S3 버킷 이름 목록"
-  value       = { for name, bucket in module.s3_buckets : name => bucket.id }
+  value       = { for name, bucket in module.s3_buckets : name => bucket.bucket_id }
 }
 
 

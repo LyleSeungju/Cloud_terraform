@@ -34,24 +34,28 @@ output "dynamodb_tables_info" {
 
 
 
-output "terraform_outputs" {
-  description = "도메인별 작업에 필요한 데이터"
-  value       = jsonencode({
-    instances_info       = output.instances_info
-    rds_endpoint         = output.rds_endpoint
-    ecr_repository_urls  = output.ecr_repository_urls
-    dynamodb_tables_info = output.dynamodb_tables_info
-  })
-}
-
 resource "aws_s3_object" "outputs" {
-  bucket = module.s3_buckets["terraform_outputs"].bucket_id
+  bucket = module.s3_buckets["lyle_terraform_outputs"].bucket_id
   key    = "terraform/outputs.json"
   content = jsonencode({
-    instances_info       = output.instances_info
-    rds_endpoint         = output.rds_endpoint
-    ecr_repository_urls  = output.ecr_repository_urls
-    dynamodb_tables_info = output.dynamodb_tables_info
+    instances_info = {
+      for instance_name, instance in module.ec2_instance :
+      instance_name => {
+        instance_id  = instance.instance_id
+        private_ip   = instance.instance_private_ip
+        public_ip    = instance.instance_public_ip
+      }
+    }
+    rds_endpoint = var.is_rds && length(module.rds) > 0 ? module.rds[0].rds_endpoint : null
+    ecr_repository_urls = { for repo_name, repo in module.ecr : repo_name => repo.repository_url }
+    dynamodb_tables_info = {
+      for table_name, table in module.dynamodb_tables :
+      table_name => {
+        table_name = table.table_name
+        table_arn  = table.table_arn
+        table_id   = table.table_id
+      }
+    }
   })
   acl    = "private"  # 데이터 보호를 위해 파일 접근 권한 설정
   tags = {

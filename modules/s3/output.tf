@@ -3,6 +3,11 @@ output "bucket_name" {
   value       = aws_s3_bucket.this.bucket
 }
 
+output "bucket_id" {
+  description = "생성된 S3 버킷 ID"
+  value = aws_s3_bucket.this.id
+}
+
 # 정적 웹사이트 호스팅이 활성화된 경우에만 출력
 output "website_endpoint" {
   description = "정적 웹사이트 엔드포인트 (정적 웹 호스팅이 활성화된 경우)"
