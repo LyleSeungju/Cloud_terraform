@@ -14,3 +14,9 @@ terraform {
     }
   }
 }
+
+variable "slack_webhook_url" {
+  description = "Slack 알림을 위한 웹훅 URL"
+  type        = string
+  default     = ""  # 필요에 따라 기본값 설정
+}
